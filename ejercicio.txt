@@ -1,0 +1,106 @@
+En el siguiente JSON hay una lista de 4 mensajes que enviará el chatbot. 
+El primer mensaje corresponde a un menú en el que el chatbot brinda 3 opciones de respuesta posible y según la opción elegida, el chatbot dará la información.
+
+Los 3 mensajes restantes, derivan de cada una de las opciones del menú del primer mensaje.
+
+**Ejercicio:**
+
+- El menú necesita que el usuario seleccione entre una de las 3 opciones posibles. 
+En caso que la persona responda con otro mensaje, el chatbot debe volver a repetir la pregunta. 
+Para esto, configurar el JSON de tal manera que exista una pregunta requerida y en caso de necesitarse repetir el mensaje, configurar el texto que va a reenviar.
+- Utilizando como referencia el mensaje de id: **2**, configurar los mensajes **3** y **4** para que tengan las condiciones necesarias para ser mostrados incluyendo los textos que el chatbot va a enviar en el caso que falte alguno de estos.
+- Revisar que todas las condiciones estén configuradas correctamente y que todos los mensajes se encuentren activos.
+
+```json
+{
+    "question_list": [
+        {
+            "text": [
+                "¡Hola! Bienvenido a nuestra tienda online, ¿en qué te puedo ayudar?"
+            ],
+            "retry_text": [
+                "..."
+            ],
+            "disabled": false,
+            "response_type": "LIST",
+            "response_options": [
+                "Productos",
+                "Sucursales",
+                "Horarios de atención"
+            ],
+            "id": 1,
+            "order": 1,
+            "internal_name": "menu",
+            "required": false
+        },
+        {
+            "text": [
+                "Para ver nuestros productos ingresá a https://www.tiendaonline.com/productos"
+            ],
+            "retry_text": [],
+            "disabled": false,
+            "response_type": "TEXT",
+            "response_options": [],
+            "id": 2,
+            "order": 2,
+            "internal_name": "productos",
+            "conditions_to_show": {
+                "any": [
+                    {
+                        "fact": "collected_data",
+                        "path": ".custom.menu",
+                        "operator": "equal",
+                        "value": "Productos"
+                    }
+                ]
+            },
+            "required": false
+        },
+        {
+            "text": [
+                "Nuestra sucursal se encuentra en Calle Falsa 123"
+            ],
+            "retry_text": [],
+            "disabled": true,
+            "response_type": "TEXT",
+            "response_options": [],
+            "id": 3,
+            "order": 3,
+            "internal_name": "sucursales",
+            "conditions_to_show": {
+                "any": [
+                    {
+                        "fact": "collected_data",
+                        "path": ".custom.menu",
+                        "operator": "notEqual",
+                        "value": "Sucursales"
+                    }
+                ]
+            },
+            "required": false
+        },
+        {
+            "text": [],
+            "retry_text": [],
+            "disabled": false,
+            "response_type": "TEXT",
+            "response_options": [],
+            "id": 4,
+            "order": 4,
+            "internal_name": "horarios",
+            "required": false
+        }
+    ]
+}
+```
+
+**Referencias:**
+
+- text: Contiene el o los textos que el chatbot va a enviar en ese mensaje.
+- retry_text: Contiene el o los textos que el chatbot va a enviar en caso de reinsistir en ese mensaje.
+- disabled: Indica si la pregunta está deshabilitada o activa.
+- response_type: Indica el tipo de respuesta que espera del usuario.
+- response_options: En el caso que la respuesta esperada sea de tipo **Lista**, contiene todas las opciones posibles.
+- required: Indica si la pregunta es obligatoria o no.
+- internal_name: Es el identificador del mensaje.
+- conditions_to_show: Contiene las condiciones que deben cumplirse para que el mensaje se envíe.

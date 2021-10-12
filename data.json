@@ -1,0 +1,80 @@
+{
+    "question_list": [
+        {
+            "text": [
+                "¡Hola! Bienvenido a nuestra tienda online, ¿en qué te puedo ayudar?"
+            ],
+            "retry_text": [
+                "Disculpa, no sabemos como responder al mensaje enviado :(. Asegurate de respetar mayúsculas y minúsculas\nPor el momento podemos ayudarte con:\nProductos\nSucursales\nHorarios de atención\n"
+            ],
+            "disabled": false,
+            "response_type": "LIST",
+            "response_options": [
+                "Productos",
+                "Sucursales",
+                "Horarios de atención"
+            ],
+            "id": 1,
+            "order": 1,
+            "internal_name": "menu",
+            "required": false
+        },
+        {
+            "text": [
+                "Para ver nuestros productos ingresá a https://www.tiendaonline.com/productos"
+            ],
+            "retry_text": [],
+            "disabled": false,
+            "response_type": "TEXT",
+            "response_options": [],
+            "id": 2,
+            "order": 2,
+            "internal_name": "productos",
+            "conditions_to_show": {
+                "any": [
+                    {
+                        "fact": "collected_data",
+                        "path": ".custom.menu",
+                        "operator": "equal",
+                        "value": "Productos"
+                    }
+                ]
+            },
+            "required": false
+        },
+        {
+            "text": [
+                "Nuestra sucursal se encuentra en Calle Falsa 123"
+            ],
+            "retry_text": [],
+            "disabled": true,
+            "response_type": "TEXT",
+            "response_options": [],
+            "id": 3,
+            "order": 3,
+            "internal_name": "sucursales",
+            "conditions_to_show": {
+                "any": [
+                    {
+                        "fact": "collected_data",
+                        "path": ".custom.menu",
+                        "operator": "notEqual",
+                        "value": "Sucursales"
+                    }
+                ]
+            },
+            "required": false
+        },
+        {
+            "text": ["De 09:00 hs hasta 20:00hs"],
+            "retry_text": [],
+            "disabled": false,
+            "response_type": "TEXT",
+            "response_options": [],
+            "id": 4,
+            "order": 4,
+            "internal_name": "horarios",
+            "required": false
+        }
+    ]
+}
